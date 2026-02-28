@@ -16,5 +16,5 @@ const likeSechema = new Schema(
   { timestamps: true },
 );
 
-const like = mongoose.models.likes || mongoose.models("Like", likeSechema);
+const like = mongoose.models.like || mongoose.models("Like", likeSechema);
 module.exports = like
