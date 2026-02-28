@@ -17,3 +17,4 @@ const likeSechema = new Schema(
 );
 
 const like = mongoose.models.likes || mongoose.models("Like", likeSechema);
+module.exports = like
