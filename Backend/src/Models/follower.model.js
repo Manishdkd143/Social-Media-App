@@ -1,4 +1,4 @@
-const { Schema , mongoose} = reuqire('mongoose')
+const { Schema , mongoose} = require('mongoose')
 
 const followsSchema = new Schema({
     follower:{
@@ -8,7 +8,7 @@ const followsSchema = new Schema({
             require: true,
           }
     },
-    followings:{
+    following:{
          userId: {
               type: Schema.Types.ObjectId,
               ref: "User",
@@ -18,6 +18,6 @@ const followsSchema = new Schema({
 })
 
 
-const follows = mongoose.model.follows || mongoose.model("follow",followsSchema);
-module.exports = follows
+const Follow = mongoose.models.Follow || mongoose.model("Follow",followsSchema);
+module.exports = Follow
 
