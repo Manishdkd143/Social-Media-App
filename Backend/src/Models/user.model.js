@@ -5,11 +5,13 @@ const userSchema = new Schema({
   username: {
     type: String,
     require:true, 
+    lowercase:true,
   },
   email: {
     type: String,
     require:true, 
-    unique:true
+    unique:true,
+    lowercase:true,
   },
   password: {
     type: String,
@@ -24,14 +26,15 @@ const userSchema = new Schema({
   fullName: {
     type: String,
     require:true, 
+    lowercase:true,
   },
   bio: {
     type: String,
     require:true, 
+   lowercase:true,
   },
   avatarUrl: {
     type: String,
-    require:true, 
   },
   refreshToken:{
     type:String,
@@ -64,5 +67,10 @@ userSchema.methods.generatedRefreshToken=function(){
 userSchema.methods.isPasswordCorrect=async function(password){
   return await bcrypt.compare(this.password,password);
 }
+userSchema.pre("save",async function(password) {
+  if(!this.isModified("password"))return next();
+  this.password=await bcrypt.hashSync(password,10);
+  next();
+})
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 module.exports = User;
