@@ -12,6 +12,7 @@ const commentSchema=new Schema({
     post:{
         type:Schema.Types.ObjectId,
         ref:"Post",
+        require:true,
     },
     commentLike:{
         type:Schema.Types.ObjectId,

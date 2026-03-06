@@ -4,15 +4,14 @@ const postSchema=new Schema({
       type:Schema.Types.ObjectId,
       ref:"User",
     },
-    title:{
-        type:String
-    },
-    video:{
-        type:String,
-    },
-    image:{
-        type:String,
-    },
+    videos:[{
+        url:String,
+       public_id:String,
+    }],
+    images:[{
+       url:String,
+       public_id:String,
+    }],
     captions:{
       type:String,
     },

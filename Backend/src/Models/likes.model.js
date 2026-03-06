@@ -11,6 +11,9 @@ const likeSechema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Post",
     },
+    likesCount:{
+      type:Number
+    }
     
   },
   { timestamps: true },

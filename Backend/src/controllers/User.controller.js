@@ -38,7 +38,8 @@ const UserRegister = async (req, res) => {
       fullName,
       bio,
       avatarUrl,
-    }).select("-password");
+    },
+  ).select("-password");
     if (!createdUser) {
       throw new ApiError(400, "User creation failed!");
     }
@@ -52,7 +53,7 @@ const UserRegister = async (req, res) => {
     throw new ApiError(400, error?.message || "User registration failed!");
   }
 };
-const userLogin = async (req, res) => {
+const userLogin = async (req,res) =>{
   try {
     const { email, password } = req.body;
     if (!email) throw new ApiError(400, "Email is required!");
@@ -191,7 +192,7 @@ const updateUserAvatar = async (req, res) => {
     if (!req.file) {
       throw new ApiError(500, "file is required!");
     }
-    const uploadCloud = await uploadFileOnCloudinary(req?.file);
+    const uploadCloud = await uploadFileOnCloudinary(req?.file,"avatars");
     if (!uploadCloud)
       throw new ApiError(500, "upload failed while upload file on Cludinery");
     const currentUser = await User.findById(user._id).select(
@@ -249,7 +250,6 @@ const updateUserEmail = async (req, res) => {
     throw new ApiError(500, "somthing happend from our side");
   }
 };
-
 const updateUserNumber = async (req, res) => {
   const { newMobileNumber, password } = req.body;
   try {
