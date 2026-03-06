@@ -1,32 +1,29 @@
-const { default: mongoose } = require("mongoose");
-const ApiError = require("../helpers/ApiError");
-const ApiResponse = require("../helpers/ApiResponse");
-
-const createComment = async (req, res) => {
-  const user = req.user;
-  const postId = req.params.postId;
-  const { comment } = req.body;
-  try {
-    if (!user) {
-      throw new ApiError(401, "UnAuthorized ");
+const Post = require('../Models/post.model')
+const Comment = require("../Models/comment.model")
+const postComment = async (req, res) => {
+    const userId = req.user.id;
+    const postId = req.params.postId;
+    const { comment } = req.body;
+    try {
+        if (!userId) {
+            throw new ApiError(401, "UnAuthorized ");
+        }
+        if (!postId) {
+            throw new Api
+        }
+        if (!comment) {
+            throw new ApiError(401, "comment is empty")
+        }
+       const commentONPost = await Post.findById(postId)
+       commentONPost.Comment.push({
+        userId,postId,comment
+       })
+        if(!commentONPost){
+            throw new ApiError(500,"somthing happend while comment")
+        }
+        res.status(200,{commentONPost},"comment successfull")
+    } catch (error) {
+        throw new ApiError(400,"server Error ! try again")
     }
-    if (!postId || !mongoose.isValidObjectId(postId)) {
-      throw new ApiError(400, "Invalid postId!");
-    }
-    if (!comment) {
-      throw new ApiError(400, "comment is empty");
-    }
-    const newComment = await Comment.create({
-      userId: user._id,
-      content,
-      post: postId,
-    });
-    if (!newComment) {
-      throw new ApiError(400, "Failed to create Comment");
-    }
-    res.status(201).json(new ApiResponse(201,newComment,"Comment created successfully"))
-  } catch (error) {
-    throw new ApiError(500, "server Error ! try again");
-  }
 };
-module.exports = createComment;
+module.exports = postComment
